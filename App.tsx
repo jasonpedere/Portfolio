@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
@@ -6,31 +6,95 @@ import Services from './components/Services';
 import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Blog from './components/Blog';
+import AIConsultant from './components/AIConsultant';
+import AboutPage from './pages/AboutPage';
+import ServicesPage from './pages/ServicesPage';
 
 const App: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-[#0a0a0c]">
-      <Navbar />
+  const [currentPath, setCurrentPath] = useState(window.location.hash || '#');
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash || '#';
+      setCurrentPath(hash);
       
-      <main>
+      if (hash.startsWith('#/about') || hash.startsWith('#/services')) {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    
+    // Observer for scroll animations
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-10');
+        }
+      });
+    }, observerOptions);
+
+    // Give the DOM a moment to settle before observing
+    const timer = setTimeout(() => {
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }, 100);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      observer.disconnect();
+      clearTimeout(timer);
+    };
+  }, [currentPath]);
+
+  const renderContent = () => {
+    if (currentPath === '#/about') {
+      return <AboutPage />;
+    }
+    if (currentPath === '#/services') {
+      return <ServicesPage />;
+    }
+
+    return (
+      <main className="animate-in fade-in duration-500">
         <Hero />
         
-        <div id="services-section" className="py-24">
+        <div id="services-section" className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
           <Services />
         </div>
 
-        <div id="recent-work-section" className="py-24">
+        <div id="recent-work-section" className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
           <Projects />
         </div>
 
-        <div id="about-section" className="py-24">
+        <div className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
+          <AIConsultant />
+        </div>
+
+        <div id="about-section" className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
           <About />
         </div>
 
-        <div id="contact-section" className="py-24">
+        <div id="tips-section" className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
+          <Blog />
+        </div>
+
+        <div id="contact-section" className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
           <Contact />
         </div>
       </main>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0c] text-slate-200">
+      <Navbar />
+      
+      <div className="pt-0">
+        {renderContent()}
+      </div>
 
       <Footer />
 

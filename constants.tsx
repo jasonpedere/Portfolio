@@ -13,13 +13,13 @@ import {
 export const PROJECTS: Project[] = [
   {
     id: '1',
-    title: 'Bella Italia Ristorante',
+    title: 'Restaurant',
     description: 'A complete online presence with digital menu, table reservation system, and location map.',
     longDescription: 'Created a high-converting website for a local Italian restaurant. Features include a mobile-friendly menu, easy reservation form, and integration with Google Maps to help customers find them easily.',
-    thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7ed9d42339?q=80&w=1200&auto=format&fit=crop',
+    thumbnail: 'https://i.imgur.com/RW4r5D9.png',
     technologies: ['Mobile Optimized', 'Reservation System', 'SEO Ready'],
     type: 'web',
-    liveUrl: '#',
+    liveUrl: 'https://restaurant-eight-dun.vercel.app/',
     githubUrl: '#',
     achievements: ['Increased online bookings by 40%', 'First page of Google for "Italian food nearby"']
   },

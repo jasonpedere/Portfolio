@@ -10,14 +10,14 @@ const getApiKey = () => {
   }
 };
 
-const ai = new GoogleGenAI({ apiKey: getApiKey() });
-
 export const getProjectConsultation = async (prompt: string) => {
-  if (!getApiKey()) {
+  const apiKey = getApiKey();
+  if (!apiKey) {
     return "I'm ready to help! Please ensure your API key is configured so I can generate a custom plan for you.";
   }
 
   try {
+    const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: `User Context: A local business owner (restaurant or store) asks: "${prompt}"
@@ -31,7 +31,8 @@ export const getProjectConsultation = async (prompt: string) => {
       4. Keep it under 80 words.`,
     });
 
-    return response.text;
+    // Library returns text() helper; fallback keeps things resilient across versions.
+    return (response as any)?.response?.text?.() ?? (response as any)?.text ?? '';
   } catch (error) {
     console.error("Gemini Error:", error);
     return "I'm having a bit of trouble connecting right now. Please use the contact form below and Json will get back to you personally!";

@@ -34,7 +34,7 @@ const ManagePage: React.FC = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === '1234') {
+    if (password === '2285') {
       setIsAuthenticated(true);
     } else {
       alert('Incorrect Access Key');

@@ -9,29 +9,25 @@ import Services from './components/Services';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import AboutPage from './pages/AboutPage';
-import ServicesPage from './pages/ServicesPage';
+import AboutPage from './AboutPage';
+import ServicesPage from './ServicesPage';
 
 const App: React.FC = () => {
-  console.log('App component rendering');
-  // Use a cleaner path state
   const [currentPath, setCurrentPath] = useState(window.location.hash || '#');
 
   useEffect(() => {
-    console.log('App useEffect running');
     const handleHashChange = () => {
       const hash = window.location.hash || '#';
       setCurrentPath(hash);
       
-      // If we are navigating to a dedicated page, scroll to top
       if (hash.startsWith('#/about') || hash.startsWith('#/services')) {
-        window.scrollTo({ top: 0, behavior: 'instant' });
+        window.scrollTo({ top: 0, behavior: 'auto' });
       }
     };
 
     window.addEventListener('hashchange', handleHashChange);
     
-    // Initial reveal observer for scroll animations
+    // Observer for scroll animations
     const observerOptions = { threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -42,17 +38,19 @@ const App: React.FC = () => {
       });
     }, observerOptions);
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // Give the DOM a moment to settle before observing
+    const timer = setTimeout(() => {
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }, 100);
 
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
       observer.disconnect();
+      clearTimeout(timer);
     };
-  }, []);
+  }, [currentPath]);
 
-  // Dedicated Page Logic
   const renderContent = () => {
-    // Explicitly check for our dedicated page routes
     if (currentPath === '#/about') {
       return <AboutPage />;
     }
@@ -60,32 +58,31 @@ const App: React.FC = () => {
       return <ServicesPage />;
     }
 
-    // Default: Render the Landing Page (Home)
     return (
-      <main>
+      <main className="animate-in fade-in duration-500">
         <Hero />
         
-        <div id="services-section" className="reveal opacity-0 translate-y-10 transition-all duration-1000">
+        <div id="services-section" className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
           <Services />
         </div>
 
-        <div id="recent-work-section" className="reveal opacity-0 translate-y-10 transition-all duration-1000">
+        <div id="recent-work-section" className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
           <Projects />
         </div>
 
-        <div className="reveal opacity-0 translate-y-10 transition-all duration-1000">
+        <div className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
           <AIConsultant />
         </div>
 
-        <div id="about-section" className="reveal opacity-0 translate-y-10 transition-all duration-1000">
+        <div id="about-section" className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
           <About />
         </div>
 
-        <div id="tips-section" className="reveal opacity-0 translate-y-10 transition-all duration-1000">
+        <div id="tips-section" className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
           <Blog />
         </div>
 
-        <div id="contact-section" className="reveal opacity-0 translate-y-10 transition-all duration-1000">
+        <div id="contact-section" className="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
           <Contact />
         </div>
       </main>
@@ -93,10 +90,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0c]">
+    <div className="min-h-screen bg-[#0a0a0c] text-slate-200">
       <Navbar />
       
-      <div>
+      <div className="pt-0">
         {renderContent()}
       </div>
 

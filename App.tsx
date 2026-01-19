@@ -13,10 +13,12 @@ import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
 
 const App: React.FC = () => {
+  console.log('App component rendering');
   // Use a cleaner path state
   const [currentPath, setCurrentPath] = useState(window.location.hash || '#');
 
   useEffect(() => {
+    console.log('App useEffect running');
     const handleHashChange = () => {
       const hash = window.location.hash || '#';
       setCurrentPath(hash);

@@ -1,9 +1,20 @@
 
-import React from 'react';
-import { BLOG_POSTS } from '../constants';
+import React, { useState, useEffect } from 'react';
+import { getBlogs } from '../utils/dataManager';
+import { BlogPost } from '../types';
 import { Calendar, ArrowUpRight } from 'lucide-react';
 
 const Blog: React.FC = () => {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    setPosts(getBlogs());
+    
+    const handleUpdate = () => setPosts(getBlogs());
+    window.addEventListener('blogsUpdated', handleUpdate);
+    return () => window.removeEventListener('blogsUpdated', handleUpdate);
+  }, []);
+
   return (
     <section id="tips" className="py-24 bg-[#0a0a0c] scroll-mt-24">
       <div className="max-w-7xl mx-auto px-6">
@@ -15,7 +26,7 @@ const Blog: React.FC = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-12">
-          {BLOG_POSTS.map((post) => (
+          {posts.map((post) => (
             <div key={post.id} className="group cursor-pointer">
               <div className="relative aspect-video rounded-3xl overflow-hidden mb-6">
                 <img 
@@ -44,6 +55,11 @@ const Blog: React.FC = () => {
               </div>
             </div>
           ))}
+          {posts.length === 0 && (
+            <div className="col-span-full text-center py-12 text-slate-500">
+              No blog posts available at the moment.
+            </div>
+          )}
         </div>
       </div>
     </section>

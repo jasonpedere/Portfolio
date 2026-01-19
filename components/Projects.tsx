@@ -1,13 +1,25 @@
 
-import React, { useState } from 'react';
-import { ProjectType } from '../types';
-import { PROJECTS } from '../constants';
+import React, { useState, useEffect } from 'react';
+import { ProjectType, Project } from '../types';
+import { getProjects } from '../utils/dataManager';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 
 const Projects: React.FC = () => {
   const [filter, setFilter] = useState<ProjectType>('all');
+  const [projects, setProjects] = useState<Project[]>([]);
 
-  const filteredProjects = PROJECTS.filter(p => filter === 'all' || p.type === filter);
+  useEffect(() => {
+    // Initial load
+    setProjects(getProjects());
+
+    // Listen for updates from the admin panel
+    const handleUpdate = () => setProjects(getProjects());
+    window.addEventListener('projectsUpdated', handleUpdate);
+
+    return () => window.removeEventListener('projectsUpdated', handleUpdate);
+  }, []);
+
+  const filteredProjects = projects.filter(p => filter === 'all' || p.type === filter);
 
   return (
     <section id="recent-work" className="py-24 bg-[#0a0a0c] scroll-mt-24">
@@ -82,6 +94,11 @@ const Projects: React.FC = () => {
               </div>
             </div>
           ))}
+          {filteredProjects.length === 0 && (
+            <div className="col-span-full text-center py-12 text-slate-500">
+              No projects found in this category yet.
+            </div>
+          )}
         </div>
       </div>
     </section>

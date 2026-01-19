@@ -1,15 +1,17 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
-import Services from './components/Services';
+import AIConsultant from './components/AIConsultant';
 import About from './components/About';
+import Services from './components/Services';
+import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import Blog from './components/Blog';
-import AIConsultant from './components/AIConsultant';
-import AboutPage from './pages/AboutPage';
-import ServicesPage from './pages/ServicesPage';
+import AboutPage from './AboutPage';
+import ServicesPage from './ServicesPage';
+import ManagePage from './pages/ManagePage';
 
 const App: React.FC = () => {
   const [currentPath, setCurrentPath] = useState(window.location.hash || '#');
@@ -19,7 +21,7 @@ const App: React.FC = () => {
       const hash = window.location.hash || '#';
       setCurrentPath(hash);
       
-      if (hash.startsWith('#/about') || hash.startsWith('#/services')) {
+      if (['#/about', '#/services', '#/manage'].some(path => hash.startsWith(path))) {
         window.scrollTo({ top: 0, behavior: 'auto' });
       }
     };
@@ -50,6 +52,9 @@ const App: React.FC = () => {
   }, [currentPath]);
 
   const renderContent = () => {
+    if (currentPath === '#/manage') {
+      return <ManagePage />;
+    }
     if (currentPath === '#/about') {
       return <AboutPage />;
     }
@@ -90,13 +95,14 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0c] text-slate-200">
-      <Navbar />
+      {/* Hide navbar on manage page for cleaner admin look */}
+      {currentPath !== '#/manage' && <Navbar />}
       
       <div className="pt-0">
         {renderContent()}
       </div>
 
-      <Footer />
+      {currentPath !== '#/manage' && <Footer />}
 
       {/* Background Decor */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-50 overflow-hidden">
@@ -108,4 +114,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-

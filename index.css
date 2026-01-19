@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+body {
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom gradient backgrounds */
+.bg-grid-pattern {
+  background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+.blur-glow {
+  filter: blur(100px);
+  opacity: 0.4;
+}

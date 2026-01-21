@@ -69,6 +69,7 @@ const ManagePage: React.FC = () => {
         title: '',
         date: today,
         excerpt: '',
+        content: '',
         image: 'https://images.unsplash.com/photo-1499750310159-5254f4cc157e?q=80&w=800',
         tags: []
       });
@@ -334,12 +335,23 @@ const ManagePage: React.FC = () => {
               {editType === 'blog' && (
                 <>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-400">Excerpt</label>
+                    <label className="text-sm font-medium text-slate-400">Excerpt (Short Preview)</label>
                     <textarea 
                       value={formData.excerpt} 
                       onChange={(e) => setFormData({...formData, excerpt: e.target.value})}
                       className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-indigo-500 outline-none h-24"
+                      placeholder="A short description that appears on the blog cards..."
                     />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-400">Full Article Content</label>
+                    <textarea 
+                      value={formData.content || ''} 
+                      onChange={(e) => setFormData({...formData, content: e.target.value})}
+                      className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-indigo-500 outline-none h-64 font-mono text-sm"
+                      placeholder="Full article text here... Use ## for headings, ### for subheadings, - for bullet points"
+                    />
+                    <p className="text-xs text-slate-500">Tip: Use ## for main headings, ### for subheadings, - for bullet points</p>
                   </div>
                    <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-400">Tags (comma separated)</label>

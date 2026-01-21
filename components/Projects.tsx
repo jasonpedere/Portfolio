@@ -87,10 +87,20 @@ const Projects: React.FC = () => {
                   ))}
                 </ul>
 
-                <button className="flex items-center gap-2 text-white font-semibold group/btn">
-                  See Business Case
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </button>
+                {project.type === 'web' ? (
+                  <a 
+                    href="#/web-services"
+                    className="flex items-center gap-2 text-white font-semibold group/btn hover:text-cyan-400 transition-colors"
+                  >
+                    See Business Case
+                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </a>
+                ) : (
+                  <button className="flex items-center gap-2 text-white font-semibold group/btn">
+                    See Business Case
+                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </button>
+                )}
               </div>
             </div>
           ))}

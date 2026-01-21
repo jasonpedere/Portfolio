@@ -15,6 +15,7 @@ import ManagePage from './pages/ManagePage';
 import BlogPostPage from './pages/BlogPostPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
+import WebServicesMarketingPage from './pages/WebServicesMarketingPage';
 
 const App: React.FC = () => {
   const [currentPath, setCurrentPath] = useState(window.location.hash || '#');
@@ -24,7 +25,7 @@ const App: React.FC = () => {
       const hash = window.location.hash || '#';
       setCurrentPath(hash);
       
-      if (['#/about', '#/services', '#/manage', '#/privacy', '#/terms'].some(path => hash.startsWith(path))) {
+      if (['#/about', '#/services', '#/manage', '#/privacy', '#/terms', '#/web-services'].some(path => hash.startsWith(path))) {
         window.scrollTo({ top: 0, behavior: 'auto' });
       }
     };
@@ -62,6 +63,7 @@ const App: React.FC = () => {
     if (currentPath === '#/manage') {
       return <ManagePage />;
     }
+    if (currentPath === '#/web-services') return <WebServicesMarketingPage />;
     if (currentPath === '#/about') return <AboutPage />;
     if (currentPath === '#/services') return <ServicesPage />;
     if (currentPath === '#/privacy') return <PrivacyPage />;

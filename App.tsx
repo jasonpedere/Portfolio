@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import AboutPage from './AboutPage';
 import ServicesPage from './ServicesPage';
 import ManagePage from './pages/ManagePage';
+import BlogPostPage from './pages/BlogPostPage';
 
 const App: React.FC = () => {
   const [currentPath, setCurrentPath] = useState(window.location.hash || '#');
@@ -52,6 +53,10 @@ const App: React.FC = () => {
   }, [currentPath]);
 
   const renderContent = () => {
+    if (currentPath.startsWith('#/blog/')) {
+      const postId = currentPath.replace('#/blog/', '');
+      return <BlogPostPage postId={postId} />;
+    }
     if (currentPath === '#/manage') {
       return <ManagePage />;
     }

@@ -131,40 +131,8 @@ const Blog: React.FC = () => {
 
               {/* Content */}
               <div className="prose prose-invert prose-lg max-w-none">
-                {selectedPost.content ? (
-                  selectedPost.content.split('\n').map((paragraph, idx) => {
-                    if (paragraph.startsWith('## ')) {
-                      return (
-                        <h2 key={idx} className="text-2xl font-bold text-white mt-8 mb-4">
-                          {paragraph.replace('## ', '')}
-                        </h2>
-                      );
-                    } else if (paragraph.startsWith('### ')) {
-                      return (
-                        <h3 key={idx} className="text-xl font-bold text-white mt-6 mb-3">
-                          {paragraph.replace('### ', '')}
-                        </h3>
-                      );
-                    } else if (paragraph.trim() === '') {
-                      return <div key={idx} className="h-4" />;
-                    } else if (paragraph.startsWith('- ')) {
-                      return (
-                        <li key={idx} className="text-slate-300 ml-6 mb-2">
-                          {paragraph.replace('- ', '')}
-                        </li>
-                      );
-                    } else {
-                      return (
-                        <p key={idx} className="text-slate-300 mb-4 leading-relaxed">
-                          {paragraph}
-                        </p>
-                      );
-                    }
-                  })
-                ) : (
-                  <p className="text-slate-400 italic">
-                    Full article content coming soon...
-                  </p>
+                {selectedPost.content ? renderContent(selectedPost.content) : (
+                  <p className="text-slate-400 italic">Full article content coming soon...</p>
                 )}
               </div>
             </div>
@@ -173,6 +141,71 @@ const Blog: React.FC = () => {
       )}
     </section>
   );
+};
+
+// Minimal markdown-ish renderer for headings, paragraphs, and bullet lists
+const renderContent = (content: string) => {
+  const lines = content.split('\n');
+  const elements: React.ReactNode[] = [];
+  let listBuffer: string[] = [];
+
+  const flushList = (keyBase: string) => {
+    if (listBuffer.length === 0) return;
+    elements.push(
+      <ul key={`${keyBase}-list`} className="list-disc list-inside text-slate-300 space-y-1 mb-4">
+        {listBuffer.map((item, idx) => (
+          <li key={`${keyBase}-li-${idx}`}>{item}</li>
+        ))}
+      </ul>
+    );
+    listBuffer = [];
+  };
+
+  lines.forEach((line, idx) => {
+    const trimmed = line.trim();
+
+    if (trimmed === '') {
+      flushList(`para-${idx}`);
+      elements.push(<div key={`spacer-${idx}`} className="h-4" />);
+      return;
+    }
+
+    if (trimmed.startsWith('## ')) {
+      flushList(`heading-${idx}`);
+      elements.push(
+        <h2 key={`h2-${idx}`} className="text-2xl font-bold text-white mt-8 mb-4">
+          {trimmed.replace('## ', '')}
+        </h2>
+      );
+      return;
+    }
+
+    if (trimmed.startsWith('### ')) {
+      flushList(`subheading-${idx}`);
+      elements.push(
+        <h3 key={`h3-${idx}`} className="text-xl font-bold text-white mt-6 mb-3">
+          {trimmed.replace('### ', '')}
+        </h3>
+      );
+      return;
+    }
+
+    if (trimmed.startsWith('- ')) {
+      listBuffer.push(trimmed.replace('- ', ''));
+      return;
+    }
+
+    // Paragraph
+    flushList(`para-${idx}`);
+    elements.push(
+      <p key={`p-${idx}`} className="text-slate-300 mb-4 leading-relaxed">
+        {line}
+      </p>
+    );
+  });
+
+  flushList('final');
+  return elements;
 };
 
 export default Blog;

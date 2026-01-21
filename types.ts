@@ -35,5 +35,7 @@ export interface BlogPost {
   excerpt: string;
   content?: string;
   image: string;
+  author?: string;
+  readTimeMinutes?: number;
   tags: string[];
 }

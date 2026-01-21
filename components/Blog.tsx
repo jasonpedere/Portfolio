@@ -52,9 +52,11 @@ const Blog: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <div className="flex items-center gap-2 text-slate-500 text-sm font-mono mb-3">
+              <div className="flex items-center gap-2 text-slate-500 text-sm font-mono mb-3 flex-wrap">
                 <Calendar className="w-4 h-4" />
                 {post.date}
+                {post.author && <span className="text-slate-500">• {post.author}</span>}
+                {post.readTimeMinutes && <span className="text-slate-500">• {post.readTimeMinutes} min read</span>}
               </div>
               <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors leading-snug">
                 {post.title}
@@ -110,9 +112,11 @@ const Blog: React.FC = () => {
               </div>
 
               {/* Date */}
-              <div className="flex items-center gap-2 text-slate-500 text-sm font-mono mb-6">
+              <div className="flex items-center gap-2 text-slate-500 text-sm font-mono mb-6 flex-wrap">
                 <Calendar className="w-4 h-4" />
                 {selectedPost.date}
+                {selectedPost.author && <span className="text-slate-500">• {selectedPost.author}</span>}
+                {selectedPost.readTimeMinutes && <span className="text-slate-500">• {selectedPost.readTimeMinutes} min read</span>}
               </div>
 
               {/* Title */}

@@ -32,7 +32,7 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ postId }) => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0c] text-slate-200">
-      <div className="max-w-5xl mx-auto px-6 py-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
         <div className="flex items-center gap-3 mb-10">
           <a
             href="#tips"
@@ -42,22 +42,22 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ postId }) => {
           </a>
         </div>
 
-        <div className="aspect-video rounded-3xl overflow-hidden mb-10 border border-slate-800">
+        <div className="aspect-video rounded-3xl overflow-hidden mb-10 border border-slate-800 w-full">
           <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
         </div>
 
-        <div className="flex items-center gap-2 text-slate-500 text-sm font-mono mb-6 flex-wrap">
+        <div className="flex items-center justify-center gap-2 text-slate-500 text-sm font-mono mb-6 flex-wrap">
           <Calendar className="w-4 h-4" />
           {post.date}
           {post.author && <span className="text-slate-500">• {post.author}</span>}
           {post.readTimeMinutes && <span className="text-slate-500">• {post.readTimeMinutes} min read</span>}
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">{post.title}</h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 leading-tight text-center">{post.title}</h1>
 
-        <p className="text-xl text-slate-300 mb-10 leading-relaxed">{post.excerpt}</p>
+        <p className="text-lg sm:text-xl text-slate-300 mb-10 leading-relaxed text-center">{post.excerpt}</p>
 
-        <div className="flex gap-2 mb-8 flex-wrap">
+        <div className="flex gap-2 mb-8 flex-wrap justify-center">
           {post.tags.map((tag) => (
             <span
               key={tag}
@@ -68,9 +68,9 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ postId }) => {
           ))}
         </div>
 
-        <article className="prose prose-invert prose-lg max-w-none">
+        <article className="prose prose-invert prose-lg max-w-3xl mx-auto">
           {post.content ? renderContent(post.content) : (
-            <p className="text-slate-400 italic">Full article content coming soon...</p>
+            <p className="text-slate-400 italic text-center">Full article content coming soon...</p>
           )}
         </article>
       </div>

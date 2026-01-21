@@ -11,7 +11,7 @@ const About: React.FC = () => {
             <div className="w-full aspect-square rounded-[2rem] overflow-hidden rotate-3 bg-[#121216] border border-white/10 group">
                <img 
                 src="my_id.jpg?q=80&w=800&auto=format&fit=crop" 
-                alt="Json Pedere" 
+                alt="ZGeon Solutions" 
                 className="w-full h-full object-cover -rotate-3 group-hover:scale-110 transition-transform duration-700"
                />
             </div>
@@ -25,16 +25,16 @@ const About: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-2 text-indigo-400 font-mono text-sm mb-4">
               <User className="w-4 h-4" />
-              ABOUT JSON PEDERE
+              ABOUT ZGEON SOLUTIONS
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 tracking-tight">
               I build websites that <br />
               <span className="text-slate-500">actually grow businesses.</span>
             </h2>
             <p className="text-lg text-slate-400 mb-8 leading-relaxed">
-              I'm Json Pedere, and I noticed many amazing local restaurants and stores 
+              We're ZGeon Solutions, and we noticed many amazing local restaurants and stores 
               are missing out on customers because they don't have a modern website. 
-              My mission is to change that by building simple, beautiful, and affordable 
+              Our mission is to change that by building simple, beautiful, and affordable 
               sites that help you get found on Google and take orders with ease.
             </p>
 

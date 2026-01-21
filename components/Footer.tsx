@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
           <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
             <Globe className="text-white w-4 h-4" />
           </div>
-          <span className="text-lg font-bold text-white tracking-tight">Json Pedere<span className="text-indigo-500">.</span></span>
+          <span className="text-lg font-bold text-white tracking-tight">ZGeon Solutions<span className="text-indigo-500">.</span></span>
         </div>
 
         <div className="text-slate-500 text-sm flex items-center gap-2">

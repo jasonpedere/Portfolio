@@ -34,7 +34,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-xs text-slate-500 uppercase tracking-widest font-mono">Direct Email</div>
-                  <div className="font-medium text-white">json@pedere.design</div>
+                  <div className="font-medium text-white">contact@zgeonsolutions.com</div>
                 </div>
               </div>
               <div className="flex items-center gap-4 text-slate-300">

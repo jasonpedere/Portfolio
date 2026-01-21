@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
           <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform shadow-[0_0_20px_rgba(79,70,229,0.3)]">
             <Globe className="text-white w-6 h-6" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">Json Pedere<span className="text-indigo-500">.</span></span>
+          <span className="text-xl font-bold tracking-tight text-white">ZGeon Solutions<span className="text-indigo-500">.</span></span>
         </a>
 
         {/* Desktop Links */}

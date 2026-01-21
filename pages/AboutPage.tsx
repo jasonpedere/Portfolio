@@ -24,9 +24,9 @@ const AboutPage: React.FC = () => {
               <span className="text-indigo-500">Local Business.</span>
             </h1>
             <p className="text-xl text-slate-400 leading-relaxed mb-8">
-              I am Json Pedere, a developer dedicated to helping independent shop owners and 
+              We are ZGeon Solutions, a team dedicated to helping independent shop owners and 
               restaurant proprietors bridge the gap between their physical craft and 
-              the digital world. I believe the best technology is invisible and solves real problems.
+              the digital world. We believe the best technology is invisible and solves real problems.
             </p>
             <div className="flex flex-wrap gap-4">
               <div className="px-6 py-3 bg-white/5 border border-white/10 rounded-2xl">

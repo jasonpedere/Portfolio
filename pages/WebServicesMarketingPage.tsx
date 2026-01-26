@@ -12,6 +12,7 @@ import {
   Globe,
   CreditCard
 } from 'lucide-react';
+import Contact from '../components/Contact';
 
 interface OfferCardProps {
   icon: React.ReactNode;
@@ -33,6 +34,13 @@ interface BenefitCardProps {
 const WebServicesMarketingPage: React.FC = () => {
   const handleCTA = () => {
     window.location.href = '#contact';
+  };
+
+  const scrollToContact = () => {
+    const contactElement = document.getElementById('contact');
+    if (contactElement) {
+      contactElement.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -62,7 +70,7 @@ const WebServicesMarketingPage: React.FC = () => {
           </p>
           
           <button 
-            onClick={handleCTA}
+            onClick={scrollToContact}
             className="group bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white text-lg font-semibold px-8 py-4 rounded-lg transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50 flex items-center gap-3 mx-auto"
           >
             Get Your Website Now
@@ -175,11 +183,8 @@ const WebServicesMarketingPage: React.FC = () => {
                 <div className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-sm font-bold px-4 py-1 rounded-full mb-4">
                   BEST VALUE
                 </div>
-                <div className="flex items-baseline justify-center gap-2 mb-2">
-                  <span className="text-6xl md:text-7xl font-bold text-white">₱4,999</span>
-                </div>
-                <p className="text-2xl font-semibold text-cyan-400 mb-2">One-Time Payment</p>
-                <p className="text-slate-400">No monthly fees. Ever.</p>
+                <p className="text-3xl md:text-4xl font-semibold text-cyan-400 mb-4">One-Time Payment</p>
+                <p className="text-slate-400 text-lg">Custom quote based on your needs</p>
               </div>
               
               <div className="space-y-4 mb-8">
@@ -194,10 +199,10 @@ const WebServicesMarketingPage: React.FC = () => {
               </div>
               
               <button 
-                onClick={handleCTA}
+                onClick={scrollToContact}
                 className="w-full bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white text-xl font-bold py-4 rounded-lg transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50"
               >
-                Get Started Now
+                Get a Free Quote
               </button>
               
               <p className="text-center text-slate-500 mt-6 text-sm">
@@ -254,18 +259,19 @@ const WebServicesMarketingPage: React.FC = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button 
-              onClick={handleCTA}
-              className="group bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white text-lg font-semibold px-8 py-4 rounded-lg transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50 flex items-center justify-center gap-3"
-            >
-              <MessageCircle className="w-5 h-5" />
-              Message Us Now
-            </button>
+            onClick={scrollToContact}
+            className="group bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white text-lg font-semibold px-8 py-4 rounded-lg transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50 flex items-center justify-center gap-3"
+          >
+            <MessageCircle className="w-5 h-5" />
+            Get a Free Quote
+          </button>
             
             <button 
-              onClick={() => window.location.href = '#pricing'}
-              className="bg-slate-800 hover:bg-slate-700 text-white text-lg font-semibold px-8 py-4 rounded-lg transition-all border border-slate-600"
+              onClick={scrollToContact}
+              className="bg-slate-800 hover:bg-slate-700 text-white text-lg font-semibold px-8 py-4 rounded-lg transition-all border border-slate-600 flex items-center justify-center gap-3"
             >
-              View Pricing
+              <MessageCircle className="w-5 h-5" />
+              Contact Us
             </button>
           </div>
           
@@ -285,6 +291,9 @@ const WebServicesMarketingPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Contact Section */}
+      <Contact />
 
       {/* Footer */}
       <footer className="py-12 px-6 bg-[#0a0a0c] border-t border-slate-800">

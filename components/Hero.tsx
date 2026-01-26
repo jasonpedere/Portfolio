@@ -1,13 +1,20 @@
 
 import React from 'react';
 import { ChevronRight, Store, Utensils, ShoppingBag, Smartphone } from 'lucide-react';
+import AuroraBackground from './AuroraBackground';
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section
+      className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
+      style={{
+        background:
+          'radial-gradient(60% 60% at 30% 30%, rgba(99,102,241,0.12), rgba(10,10,12,0)),' +
+          'radial-gradient(55% 55% at 70% 40%, rgba(14,165,233,0.10), rgba(10,10,12,0))',
+      }}
+    >
       {/* Visual background elements */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 blur-glow rounded-full -z-10 animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-600/20 blur-glow rounded-full -z-10 animate-pulse delay-700"></div>
+      <AuroraBackground />
       <div className="absolute inset-0 bg-grid-pattern opacity-10 -z-20"></div>
 
       <div className="max-w-5xl mx-auto px-6 text-center">

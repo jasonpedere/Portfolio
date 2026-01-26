@@ -2,7 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { Lock, Plus, Edit2, Trash2, Save, X, ArrowLeft, Code, Copy, Check } from 'lucide-react';
 import { getProjects, saveProject, deleteProject, getBlogs, saveBlog, deleteBlog } from '../utils/dataManager';
+import { fetchFromTable, insertIntoTable, updateInTable, deleteFromTable, getSupabaseClient } from '../services/supabaseService';
 import { Project, BlogPost } from '../types';
+import TestSupabase from '../components/TestSupabase';
+import MigrateProjects from '../components/MigrateProjects';
 
 const ManagePage: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,8 +30,33 @@ const ManagePage: React.FC = () => {
     refreshData();
   }, []);
 
-  const refreshData = () => {
-    setProjects(getProjects());
+  const refreshData = async () => {
+    try {
+      // Fetch projects from Supabase
+      const supabaseProjects = await fetchFromTable('projects');
+      
+      // Transform Supabase data to match Project type
+      const transformedProjects = supabaseProjects.map((p: any) => ({
+        id: p.id.toString(),
+        title: p.title,
+        description: p.description,
+        longDescription: p.long_description,
+        thumbnail: p.image_url,
+        technologies: p.technologies || [],
+        type: p.type,
+        liveUrl: p.url,
+        githubUrl: p.github_url,
+        achievements: p.achievements || []
+      }));
+      
+      setProjects(transformedProjects);
+    } catch (error) {
+      console.error('Error fetching from Supabase:', error);
+      // Fallback to localStorage if Supabase fails
+      setProjects(getProjects());
+    }
+    
+    // Blogs still use localStorage for now
     setBlogs(getBlogs());
   };
 
@@ -80,21 +108,63 @@ const ManagePage: React.FC = () => {
     setIsEditing(true);
   };
 
-  const handleSave = () => {
-    if (editType === 'project') {
-      saveProject(formData as Project);
-    } else {
-      saveBlog(formData as BlogPost);
+  const handleSave = async () => {
+    try {
+      if (editType === 'project') {
+        // Transform to Supabase format
+        const supabaseData = {
+          title: formData.title,
+          description: formData.description,
+          long_description: formData.longDescription,
+          image_url: formData.thumbnail,
+          url: formData.liveUrl,
+          github_url: formData.githubUrl,
+          technologies: formData.technologies || [],
+          type: formData.type,
+          achievements: formData.achievements || []
+        };
+
+        // Check if this is an update or insert
+        const existingProject = projects.find(p => p.id === formData.id);
+        
+        if (existingProject && !isNaN(Number(existingProject.id))) {
+          // Update existing project in Supabase
+          await updateInTable('projects', Number(existingProject.id), supabaseData);
+        } else {
+          // Insert new project to Supabase
+          await insertIntoTable('projects', supabaseData);
+        }
+        
+        alert('Project saved successfully to Supabase!');
+      } else {
+        saveBlog(formData as BlogPost);
+        alert('Blog saved successfully!');
+      }
+      
+      setIsEditing(false);
+      refreshData();
+    } catch (error) {
+      console.error('Error saving:', error);
+      alert(`Error: ${error instanceof Error ? error.message : 'Failed to save'}`);
     }
-    setIsEditing(false);
-    refreshData();
   };
 
-  const handleDelete = (id: string, type: 'project' | 'blog') => {
+  const handleDelete = async (id: string, type: 'project' | 'blog') => {
     if (confirm('Are you sure you want to delete this?')) {
-      if (type === 'project') deleteProject(id);
-      else deleteBlog(id);
-      refreshData();
+      try {
+        if (type === 'project') {
+          // Delete from Supabase
+          await deleteFromTable('projects', Number(id));
+          alert('Project deleted from Supabase!');
+        } else {
+          deleteBlog(id);
+          alert('Blog deleted!');
+        }
+        refreshData();
+      } catch (error) {
+        console.error('Error deleting:', error);
+        alert(`Error: ${error instanceof Error ? error.message : 'Failed to delete'}`);
+      }
     }
   };
 
@@ -182,6 +252,12 @@ const ManagePage: React.FC = () => {
               </button>
             </div>
           </div>
+        </div>
+
+        {/* Test Components - Remove after testing */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <TestSupabase />
+          <MigrateProjects />
         </div>
 
         {/* List View */}

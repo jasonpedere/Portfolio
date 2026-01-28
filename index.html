@@ -58,6 +58,120 @@
       .animate-float {
         animation: float 20s ease-in-out infinite;
       }
+
+      /* Scroll animations */
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes scaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .scroll-animate {
+        opacity: 0;
+        animation: slideInUp 0.8s ease-out forwards;
+      }
+
+      .scroll-animate.visible {
+        animation: slideInUp 0.8s ease-out;
+      }
+
+      .scroll-animate-left {
+        opacity: 0;
+        animation: slideInLeft 0.8s ease-out forwards;
+      }
+
+      .scroll-animate-left.visible {
+        animation: slideInLeft 0.8s ease-out;
+      }
+
+      .scroll-animate-right {
+        opacity: 0;
+        animation: slideInRight 0.8s ease-out forwards;
+      }
+
+      .scroll-animate-right.visible {
+        animation: slideInRight 0.8s ease-out;
+      }
+
+      .scroll-animate-scale {
+        opacity: 0;
+        animation: scaleIn 0.8s ease-out forwards;
+      }
+
+      .scroll-animate-scale.visible {
+        animation: scaleIn 0.8s ease-out;
+      }
+
+      /* Staggered animation delay */
+      .stagger-1 { animation-delay: 0.1s; }
+      .stagger-2 { animation-delay: 0.2s; }
+      .stagger-3 { animation-delay: 0.3s; }
+      .stagger-4 { animation-delay: 0.4s; }
+      .stagger-5 { animation-delay: 0.5s; }
+      .stagger-6 { animation-delay: 0.6s; }
+
+      /* Parallax effect */
+      .parallax {
+        position: relative;
+      }
+
+      /* Smooth hover effects */
+      .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .hover-lift:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(79, 70, 229, 0.2);
+      }
+
       .animate-float-slow {
         animation: float 25s ease-in-out infinite;
       }

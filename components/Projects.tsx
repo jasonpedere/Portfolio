@@ -4,10 +4,12 @@ import { ProjectType, Project } from '../types';
 import { getProjects } from '../utils/dataManager';
 import { fetchFromTable } from '../services/supabaseService';
 import { ExternalLink, ArrowRight } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const Projects: React.FC = () => {
   const [filter, setFilter] = useState<ProjectType>('all');
   const [projects, setProjects] = useState<Project[]>([]);
+  const titleRef = useScrollAnimation('slide-up');
 
   useEffect(() => {
     const loadProjects = async () => {
@@ -51,7 +53,7 @@ const Projects: React.FC = () => {
   return (
     <section id="recent-work" className="py-24 bg-[#0a0a0c] scroll-mt-24">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+        <div ref={titleRef} className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 scroll-animate">
           <div>
             <h2 className="text-4xl font-bold text-white mb-4 tracking-tight">Recent Work</h2>
             <p className="text-slate-400 max-w-xl text-lg">
@@ -79,9 +81,9 @@ const Projects: React.FC = () => {
 
         <div className="grid md:grid-cols-2 gap-8">
           {filteredProjects.map((project) => (
-            <div 
+            <div
               key={project.id}
-              className="group relative bg-[#121216] border border-white/5 rounded-3xl overflow-hidden hover:border-white/20 transition-all flex flex-col"
+              className="group relative bg-[#121216] border border-white/5 rounded-3xl overflow-hidden hover:border-white/20 transition-all flex flex-col scroll-animate-scale hover-lift"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <img 

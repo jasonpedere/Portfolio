@@ -18,8 +18,8 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-8">
-          <a href="#/privacy" className="text-slate-500 hover:text-white transition-colors text-sm font-medium">Privacy Policy</a>
-          <a href="#/terms" className="text-slate-500 hover:text-white transition-colors text-sm font-medium">Terms of Use</a>
+          <a href="#/privacy" className="text-slate-500 hover:text-white text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0c]">Privacy Policy</a>
+          <a href="#/terms" className="text-slate-500 hover:text-white text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0c]">Terms of Use</a>
         </div>
       </div>
     </footer>

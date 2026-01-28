@@ -4,12 +4,11 @@ import { ProjectType, Project } from '../types';
 import { getProjects } from '../utils/dataManager';
 import { fetchFromTable } from '../services/supabaseService';
 import { ExternalLink, ArrowRight } from 'lucide-react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { TESTIMONIALS } from '../constants';
 
 const Projects: React.FC = () => {
   const [filter, setFilter] = useState<ProjectType>('all');
   const [projects, setProjects] = useState<Project[]>([]);
-  const titleRef = useScrollAnimation('slide-up');
 
   useEffect(() => {
     const loadProjects = async () => {
@@ -51,9 +50,9 @@ const Projects: React.FC = () => {
   const filteredProjects = projects.filter(p => filter === 'all' || p.type === filter);
 
   return (
-    <section id="recent-work" className="py-24 bg-[#0a0a0c] scroll-mt-24">
+    <section id="recent-work" className="py-20 bg-[#0a0a0c] scroll-mt-24">
       <div className="max-w-7xl mx-auto px-6">
-        <div ref={titleRef} className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 scroll-animate">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div>
             <h2 className="text-4xl font-bold text-white mb-4 tracking-tight">Recent Work</h2>
             <p className="text-slate-400 max-w-xl text-lg">
@@ -67,7 +66,7 @@ const Projects: React.FC = () => {
               <button
                 key={type}
                 onClick={() => setFilter(type as ProjectType)}
-                className={`px-6 py-2 rounded-full text-sm font-medium capitalize transition-all ${
+                className={`px-6 py-2 rounded-full text-sm font-medium capitalize ${
                   filter === type 
                     ? 'bg-white text-black shadow-lg' 
                     : 'text-slate-400 hover:text-white'
@@ -79,20 +78,35 @@ const Projects: React.FC = () => {
           </div>
         </div>
 
+        <div className="grid md:grid-cols-2 gap-6 mb-10">
+          {TESTIMONIALS.map((t) => (
+            <div key={t.name} className="p-6 bg-white/5 border border-white/10 rounded-2xl">
+              <p className="text-slate-300 text-sm leading-relaxed">“{t.content}”</p>
+              <div className="mt-4 flex items-center gap-3">
+                <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full" />
+                <div className="text-sm">
+                  <div className="text-white font-semibold">{t.name}</div>
+                  <div className="text-slate-500">{t.role}, {t.company}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div className="grid md:grid-cols-2 gap-8">
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              className="group relative bg-[#121216] border border-white/5 rounded-3xl overflow-hidden hover:border-white/20 transition-all flex flex-col scroll-animate-scale hover-lift"
+              className="group relative bg-[#121216] border border-white/5 rounded-3xl overflow-hidden hover:border-white/20 flex flex-col"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <img 
                   src={project.thumbnail} 
                   alt={project.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                   <a href={project.liveUrl} className="px-6 py-2 bg-white text-black rounded-full font-bold flex items-center gap-2 hover:scale-110 transition-transform">
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-4">
+                   <a href={project.liveUrl} className="px-6 py-2 bg-white text-black rounded-full font-bold flex items-center gap-2">
                      Visit Site <ExternalLink className="w-4 h-4" />
                    </a>
                 </div>
@@ -104,7 +118,7 @@ const Projects: React.FC = () => {
                     <span key={tech} className="px-3 py-1 bg-white/5 rounded-lg text-[10px] font-mono text-slate-400 uppercase tracking-wider">{tech}</span>
                   ))}
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">{project.title}</h3>
+                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-indigo-400">{project.title}</h3>
                 <p className="text-slate-400 mb-6 flex-1">{project.description}</p>
                 
                 <ul className="space-y-2 mb-8">
@@ -119,15 +133,15 @@ const Projects: React.FC = () => {
                 {project.type === 'web' ? (
                   <a 
                     href="#/web-services"
-                    className="flex items-center gap-2 text-white font-semibold group/btn hover:text-cyan-400 transition-colors"
+                    className="flex items-center gap-2 text-white font-semibold group/btn hover:text-cyan-400"
                   >
                     See Our Offer
-                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4" />
                   </a>
                 ) : (
                   <button className="flex items-center gap-2 text-white font-semibold group/btn">
                     See Our Offer
-                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4" />
                   </button>
                 )}
               </div>

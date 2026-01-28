@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ChevronRight, Store, Utensils, ShoppingBag, Smartphone } from 'lucide-react';
+import { ChevronRight, Store, Utensils, ShoppingBag, Smartphone, ShieldCheck, Search, Clock } from 'lucide-react';
 import AuroraBackground from './AuroraBackground';
 
 const Hero: React.FC = () => {
@@ -37,21 +37,37 @@ const Hero: React.FC = () => {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="#recent-work"
-            className="group px-8 py-4 bg-white text-black rounded-full font-bold flex items-center gap-2 hover:scale-105 transition-all"
-          >
-            See Real Results
-            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <a
             href="#contact"
-            className="px-8 py-4 bg-white/5 border border-white/10 text-white rounded-full font-bold hover:bg-white/10 transition-all"
+            className="group px-8 py-4 bg-white text-black rounded-full font-bold flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0c]"
           >
             Get a Free Quote
+            <ChevronRight className="w-4 h-4" />
+          </a>
+          <a
+            href="#recent-work"
+            className="px-8 py-4 bg-white/5 border border-white/10 text-white rounded-full font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0c]"
+          >
+            See Real Results
           </a>
         </div>
 
-        <div className="mt-24 flex items-center justify-center gap-12 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+          {[
+            { label: 'Local SEO setup', detail: 'Show up in “near me” searches', icon: <Search className="w-4 h-4 text-indigo-400" /> },
+            { label: 'Trusted & secure', detail: 'SSL, analytics, backups', icon: <ShieldCheck className="w-4 h-4 text-cyan-400" /> },
+            { label: 'Fast turnaround', detail: 'Launch in days, not weeks', icon: <Clock className="w-4 h-4 text-emerald-400" /> },
+          ].map((item) => (
+            <div key={item.label} className="p-4 rounded-2xl bg-white/5 border border-white/10">
+              <div className="flex items-center gap-2 text-sm font-semibold text-white">
+                {item.icon}
+                {item.label}
+              </div>
+              <div className="text-xs text-slate-400 mt-1">{item.detail}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-20 flex items-center justify-center gap-12 grayscale opacity-40">
           <div className="flex flex-col items-center gap-2">
             <Utensils className="w-10 h-10 text-white" />
             <span className="text-[10px] font-mono uppercase text-slate-500">Restaurants</span>

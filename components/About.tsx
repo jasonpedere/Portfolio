@@ -4,15 +4,15 @@ import { User, Award, CheckCircle, Smartphone } from 'lucide-react';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="py-24 relative overflow-hidden scroll-mt-24">
+    <section id="about" className="py-20 relative overflow-hidden scroll-mt-24">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
             <div className="w-full aspect-square rounded-[2rem] overflow-hidden rotate-3 bg-[#121216] border border-white/10 group">
                <img 
-                src="my_id.jpg?q=80&w=800&auto=format&fit=crop" 
+                src="https://i.imgur.com/57d38yd.png" 
                 alt="ZGeon Solutions" 
-                className="w-full h-full object-cover -rotate-3 group-hover:scale-110 transition-transform duration-700"
+              className="w-full h-full object-cover -rotate-3"
                />
             </div>
             {/* Experience badge */}
@@ -31,12 +31,25 @@ const About: React.FC = () => {
               I build websites that <br />
               <span className="text-slate-500">actually grow businesses.</span>
             </h2>
-            <p className="text-lg text-slate-400 mb-8 leading-relaxed">
-              We're ZGeon Solutions, and we noticed many amazing local restaurants and stores 
-              are missing out on customers because they don't have a modern website. 
-              Our mission is to change that by building simple, beautiful, and affordable 
-              sites that help you get found on Google and take orders with ease.
+            <p className="text-lg text-slate-400 mb-6 leading-relaxed">
+              ZGeon Solutions helps local restaurants and shops get found online and turn visitors into customers.
+              We build fast, affordable websites that look professional and make it easy to take orders.
             </p>
+
+            <ul className="grid gap-3 mb-8 text-sm text-slate-300">
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+                Simple, clean design that builds trust
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                Mobile-first layouts for busy customers
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                Local SEO to drive “near me” searches
+              </li>
+            </ul>
 
             <div className="grid grid-cols-2 gap-6 mb-12">
               {[
@@ -55,10 +68,10 @@ const About: React.FC = () => {
 
             <a 
               href="#contact" 
-              className="inline-flex items-center gap-3 text-white font-bold hover:text-indigo-400 transition-colors group"
+              className="inline-flex items-center gap-3 text-white font-bold group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0c]"
             >
               Let's Talk About Your Business
-              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-indigo-600 transition-colors">
+              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
                 <CheckCircle className="w-4 h-4" />
               </div>
             </a>

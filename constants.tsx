@@ -111,5 +111,5 @@ export const NAV_LINKS = [
   { label: 'Recent Work', href: '#recent-work' },
   { label: 'About', href: '#about' },
   { label: 'Tips', href: '#tips' },
-  { label: 'Get Started', href: '#contact' }
+  { label: 'Get a Free Quote', href: '#contact' }
 ];

@@ -41,7 +41,7 @@ const AboutPage: React.FC = () => {
           <div className="relative order-1 lg:order-2">
             <div className="aspect-square rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl relative z-10 bg-[#121216]">
               <img 
-                src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop" 
+                src="https://i.imgur.com/N4z21V0.jpg" 
                 alt="Professional Portrait" 
                 className="w-full h-full object-cover"
               />

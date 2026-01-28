@@ -4,8 +4,6 @@ import { Lock, Plus, Edit2, Trash2, Save, X, ArrowLeft, Code, Copy, Check } from
 import { getProjects, saveProject, deleteProject, getBlogs, saveBlog, deleteBlog } from '../utils/dataManager';
 import { fetchFromTable, insertIntoTable, updateInTable, deleteFromTable, getSupabaseClient } from '../services/supabaseService';
 import { Project, BlogPost } from '../types';
-import TestSupabase from '../components/TestSupabase';
-import MigrateProjects from '../components/MigrateProjects';
 
 const ManagePage: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -266,12 +264,6 @@ const ManagePage: React.FC = () => {
               </button>
             </div>
           </div>
-        </div>
-
-        {/* Test Components - Remove after testing */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <TestSupabase />
-          <MigrateProjects />
         </div>
 
         {/* List View */}

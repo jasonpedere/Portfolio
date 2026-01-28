@@ -1,6 +1,7 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { Calendar, ArrowLeft } from 'lucide-react';
 import { getBlogs } from '../utils/dataManager';
+import { fetchFromTable } from '../services/supabaseService';
 import { BlogPost } from '../types';
 
 interface BlogPostPageProps {
@@ -8,9 +9,41 @@ interface BlogPostPageProps {
 }
 
 const BlogPostPage: React.FC<BlogPostPageProps> = ({ postId }) => {
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  
+  useEffect(() => {
+    const loadBlogs = async () => {
+      try {
+        // Try to fetch from Supabase first
+        const supabaseBlogs = await fetchFromTable('blogs');
+        
+        // Transform Supabase data to match BlogPost type
+        const transformedBlogs = supabaseBlogs.map((b: any) => ({
+          id: b.id.toString(),
+          title: b.title,
+          date: b.date,
+          excerpt: b.excerpt,
+          author: b.author,
+          readTimeMinutes: b.read_time_minutes,
+          content: b.content,
+          image: b.image,
+          tags: b.tags || []
+        }));
+        
+        setBlogs(transformedBlogs);
+      } catch (error) {
+        console.error('Error fetching blogs from Supabase, falling back to localStorage:', error);
+        // Fallback to localStorage if Supabase fails
+        setBlogs(getBlogs());
+      }
+    };
+
+    loadBlogs();
+  }, []);
+
   const post = useMemo<BlogPost | undefined>(() => {
-    return getBlogs().find((p) => p.id === postId);
-  }, [postId]);
+    return blogs.find((p) => p.id === postId);
+  }, [postId, blogs]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });

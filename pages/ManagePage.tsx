@@ -21,6 +21,9 @@ const ManagePage: React.FC = () => {
   const [editType, setEditType] = useState<'project' | 'blog' | null>(null);
   const [formData, setFormData] = useState<any>({});
 
+  // Error/Status State
+  const [supabaseError, setSupabaseError] = useState<string | null>(null);
+
   // Export State
   const [showExport, setShowExport] = useState(false);
   const [exportCode, setExportCode] = useState('');
@@ -50,8 +53,10 @@ const ManagePage: React.FC = () => {
       }));
       
       setProjects(transformedProjects);
+      setSupabaseError(null);
     } catch (error) {
       console.error('Error fetching from Supabase:', error);
+      setSupabaseError(error instanceof Error ? error.message : 'Unknown Supabase fetch error');
       // Fallback to localStorage if Supabase fails
       setProjects(getProjects());
     }
@@ -135,6 +140,7 @@ const ManagePage: React.FC = () => {
           await insertIntoTable('projects', supabaseData);
         }
         
+        setSupabaseError(null);
         alert('Project saved successfully to Supabase!');
       } else {
         saveBlog(formData as BlogPost);
@@ -145,6 +151,7 @@ const ManagePage: React.FC = () => {
       refreshData();
     } catch (error) {
       console.error('Error saving:', error);
+      setSupabaseError(error instanceof Error ? error.message : 'Failed to save');
       alert(`Error: ${error instanceof Error ? error.message : 'Failed to save'}`);
     }
   };
@@ -155,6 +162,7 @@ const ManagePage: React.FC = () => {
         if (type === 'project') {
           // Delete from Supabase
           await deleteFromTable('projects', Number(id));
+          setSupabaseError(null);
           alert('Project deleted from Supabase!');
         } else {
           deleteBlog(id);
@@ -163,6 +171,7 @@ const ManagePage: React.FC = () => {
         refreshData();
       } catch (error) {
         console.error('Error deleting:', error);
+        setSupabaseError(error instanceof Error ? error.message : 'Failed to delete');
         alert(`Error: ${error instanceof Error ? error.message : 'Failed to delete'}`);
       }
     }
@@ -221,6 +230,11 @@ const ManagePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#0a0a0c] pt-32 pb-24">
       <div className="max-w-6xl mx-auto px-6">
+        {supabaseError && (
+          <div className="mb-6 rounded-2xl border border-rose-500/40 bg-rose-900/20 text-rose-100 px-4 py-3 text-sm">
+            Supabase error: {supabaseError}
+          </div>
+        )}
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
           <div className="flex items-center gap-4">

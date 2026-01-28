@@ -105,7 +105,7 @@ const App: React.FC = () => {
       {/* Hide navbar on manage page for cleaner admin look */}
       {currentPath !== '#/manage' && <Navbar />}
       
-      <div className="pt-0">
+      <div className="pt-16">
         {renderContent()}
       </div>
 

@@ -4,6 +4,7 @@ import { Lock, Plus, Edit2, Trash2, Save, X, ArrowLeft, Code, Copy, Check } from
 import { getProjects, saveProject, deleteProject, getBlogs, saveBlog, deleteBlog } from '../utils/dataManager';
 import { fetchFromTable, insertIntoTable, updateInTable, deleteFromTable, getSupabaseClient } from '../services/supabaseService';
 import { Project, BlogPost } from '../types';
+import MigrateBlogs from '../components/MigrateBlogs';
 
 const ManagePage: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -305,6 +306,11 @@ const ManagePage: React.FC = () => {
               </button>
             </div>
           </div>
+        </div>
+
+        {/* Migration Tool - Remove after migrating */}
+        <div className="mb-8">
+          <MigrateBlogs />
         </div>
 
         {/* List View */}

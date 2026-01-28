@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ProjectType, Project } from '../types';
 import { getProjects } from '../utils/dataManager';
+import { fetchFromTable } from '../services/supabaseService';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 
 const Projects: React.FC = () => {
@@ -9,11 +10,37 @@ const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
-    // Initial load
-    setProjects(getProjects());
+    const loadProjects = async () => {
+      try {
+        // Try to fetch from Supabase first
+        const supabaseProjects = await fetchFromTable('projects');
+        
+        // Transform Supabase data to match Project type
+        const transformedProjects = supabaseProjects.map((p: any) => ({
+          id: p.id.toString(),
+          title: p.title,
+          description: p.description,
+          longDescription: p.long_description,
+          thumbnail: p.image_url,
+          technologies: p.technologies || [],
+          type: p.type,
+          liveUrl: p.url,
+          githubUrl: p.github_url,
+          achievements: p.achievements || []
+        }));
+        
+        setProjects(transformedProjects);
+      } catch (error) {
+        console.error('Error fetching from Supabase, falling back to localStorage:', error);
+        // Fallback to localStorage if Supabase fails
+        setProjects(getProjects());
+      }
+    };
+
+    loadProjects();
 
     // Listen for updates from the admin panel
-    const handleUpdate = () => setProjects(getProjects());
+    const handleUpdate = () => loadProjects();
     window.addEventListener('projectsUpdated', handleUpdate);
 
     return () => window.removeEventListener('projectsUpdated', handleUpdate);

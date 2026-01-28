@@ -51,16 +51,32 @@ const ManagePage: React.FC = () => {
       }));
       
       setProjects(transformedProjects);
+      
+      // Fetch blogs from Supabase
+      const supabaseBlogs = await fetchFromTable('blogs');
+      
+      // Transform Supabase data to match BlogPost type
+      const transformedBlogs = supabaseBlogs.map((b: any) => ({
+        id: b.id.toString(),
+        title: b.title,
+        date: b.date,
+        excerpt: b.excerpt,
+        author: b.author,
+        readTimeMinutes: b.read_time_minutes,
+        content: b.content,
+        image: b.image,
+        tags: b.tags || []
+      }));
+      
+      setBlogs(transformedBlogs);
       setSupabaseError(null);
     } catch (error) {
       console.error('Error fetching from Supabase:', error);
       setSupabaseError(error instanceof Error ? error.message : 'Unknown Supabase fetch error');
       // Fallback to localStorage if Supabase fails
       setProjects(getProjects());
+      setBlogs(getBlogs());
     }
-    
-    // Blogs still use localStorage for now
-    setBlogs(getBlogs());
   };
 
   const handleLogin = (e: React.FormEvent) => {
@@ -141,8 +157,31 @@ const ManagePage: React.FC = () => {
         setSupabaseError(null);
         alert('Project saved successfully to Supabase!');
       } else {
-        saveBlog(formData as BlogPost);
-        alert('Blog saved successfully!');
+        // Transform blog to Supabase format
+        const supabaseBlogData = {
+          title: formData.title,
+          date: formData.date,
+          excerpt: formData.excerpt,
+          author: formData.author,
+          read_time_minutes: formData.readTimeMinutes,
+          content: formData.content,
+          image: formData.image,
+          tags: formData.tags || []
+        };
+
+        // Check if this is an update or insert
+        const existingBlog = blogs.find(b => b.id === formData.id);
+        
+        if (existingBlog && !isNaN(Number(existingBlog.id))) {
+          // Update existing blog in Supabase
+          await updateInTable('blogs', Number(existingBlog.id), supabaseBlogData);
+        } else {
+          // Insert new blog to Supabase
+          await insertIntoTable('blogs', supabaseBlogData);
+        }
+        
+        setSupabaseError(null);
+        alert('Blog saved successfully to Supabase!');
       }
       
       setIsEditing(false);
@@ -163,8 +202,10 @@ const ManagePage: React.FC = () => {
           setSupabaseError(null);
           alert('Project deleted from Supabase!');
         } else {
-          deleteBlog(id);
-          alert('Blog deleted!');
+          // Delete from Supabase
+          await deleteFromTable('blogs', Number(id));
+          setSupabaseError(null);
+          alert('Blog deleted from Supabase!');
         }
         refreshData();
       } catch (error) {

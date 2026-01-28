@@ -1,5 +1,5 @@
 import { getSupabaseClient } from './supabaseService';
-import { PROJECTS } from '../constants';
+import { PROJECTS, BLOG_POSTS } from '../constants';
 
 export const migrateProjectsToSupabase = async () => {
   try {
@@ -48,6 +48,56 @@ export const migrateProjectsToSupabase = async () => {
     return true;
   } catch (error) {
     console.error('Error migrating projects:', error);
+    throw error;
+  }
+};
+
+export const migrateBlogsToSupabase = async () => {
+  try {
+    console.log('Starting blogs migration to Supabase...');
+    console.log('Environment:', {
+      url: import.meta.env.VITE_SUPABASE_URL,
+      keyExists: !!import.meta.env.VITE_SUPABASE_ANON_KEY
+    });
+    
+    const client = getSupabaseClient();
+    console.log('Supabase client initialized');
+
+    // Transform blog data to match Supabase table structure
+    const blogsToInsert = BLOG_POSTS.map(blog => ({
+      title: blog.title,
+      date: blog.date,
+      excerpt: blog.excerpt,
+      author: blog.author,
+      read_time_minutes: blog.readTimeMinutes,
+      content: blog.content,
+      image: blog.image,
+      tags: blog.tags
+    }));
+
+    console.log('Blogs to insert:', blogsToInsert);
+
+    // Insert all blogs
+    for (const blog of blogsToInsert) {
+      console.log(`Inserting blog: ${blog.title}`);
+      
+      const { data, error } = await client
+        .from('blogs')
+        .insert([blog])
+        .select();
+
+      if (error) {
+        console.error(`Error inserting ${blog.title}:`, error);
+        throw error;
+      }
+
+      console.log(`✓ Migrated blog: ${blog.title}`, data);
+    }
+
+    console.log('✓ All blogs migrated successfully!');
+    return true;
+  } catch (error) {
+    console.error('Error migrating blogs:', error);
     throw error;
   }
 };

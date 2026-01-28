@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { getBlogs } from '../utils/dataManager';
+import { fetchFromTable } from '../services/supabaseService';
 import { BlogPost } from '../types';
 import { Calendar, ArrowUpRight } from 'lucide-react';
 
@@ -8,9 +9,35 @@ const Blog: React.FC = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
-    setPosts(getBlogs());
+    const loadBlogs = async () => {
+      try {
+        // Try to fetch from Supabase first
+        const supabaseBlogs = await fetchFromTable('blogs');
+        
+        // Transform Supabase data to match BlogPost type
+        const transformedBlogs = supabaseBlogs.map((b: any) => ({
+          id: b.id.toString(),
+          title: b.title,
+          date: b.date,
+          excerpt: b.excerpt,
+          author: b.author,
+          readTimeMinutes: b.read_time_minutes,
+          content: b.content,
+          image: b.image,
+          tags: b.tags || []
+        }));
+        
+        setPosts(transformedBlogs);
+      } catch (error) {
+        console.error('Error fetching blogs from Supabase, falling back to localStorage:', error);
+        // Fallback to localStorage if Supabase fails
+        setPosts(getBlogs());
+      }
+    };
+
+    loadBlogs();
     
-    const handleUpdate = () => setPosts(getBlogs());
+    const handleUpdate = () => loadBlogs();
     window.addEventListener('blogsUpdated', handleUpdate);
     return () => window.removeEventListener('blogsUpdated', handleUpdate);
   }, []);

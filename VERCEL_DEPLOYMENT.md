@@ -45,6 +45,7 @@ vercel --prod
 
 ## Post-Deployment
 - Your site will be available at: `https://your-project-name.vercel.app`
+ - Your site will be available at: `https://zgeons.com` (after adding your custom domain in Vercel)
 - Set up a custom domain in Vercel settings if desired
 - Enable automatic deployments for your main branch
 

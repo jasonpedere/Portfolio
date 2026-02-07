@@ -19,7 +19,7 @@ export const PROJECTS: Project[] = [
     thumbnail: 'https://i.imgur.com/RW4r5D9.png',
     technologies: ['Mobile Optimized', 'Reservation System', 'SEO Ready'],
     type: 'web',
-    liveUrl: 'https://restaurant-eight-dun.vercel.app/',
+    liveUrl: 'https://zgeons.com',
     githubUrl: '#',
     achievements: ['Increased online bookings by 40%', 'First page of Google for "Italian food nearby"']
   },

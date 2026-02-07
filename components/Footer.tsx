@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
     <footer className="py-12 bg-[#0a0a0c] border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="ZGeon Solutions Logo" className="h-8 w-auto" />
+          <img src="/zgeon_logo.png" alt="ZGeon Solutions Logo" className="h-8 w-auto" />
           <span className="text-lg font-bold text-white tracking-tight">ZGeon Solutions<span className="text-indigo-500">.</span></span>
         </div>
 

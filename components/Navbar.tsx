@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
     }`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0c]">
-          <img src="/logo.png" alt="ZGeon Solutions Logo" className="h-10 w-auto" />
+          <img src="/zgeon_logo.png" alt="ZGeon Solutions Logo" className="h-10 w-auto" />
           <span className="text-xl font-bold tracking-tight text-white">ZGeon Solutions<span className="text-indigo-500">.</span></span>
         </a>
 

@@ -1,15 +1,12 @@
 
 import React from 'react';
-import { Globe, Heart } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
     <footer className="py-12 bg-[#0a0a0c] border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-            <Globe className="text-white w-4 h-4" />
-          </div>
+          <img src="/logo.png" alt="ZGeon Solutions Logo" className="h-8 w-auto" />
           <span className="text-lg font-bold text-white tracking-tight">ZGeon Solutions<span className="text-indigo-500">.</span></span>
         </div>
 

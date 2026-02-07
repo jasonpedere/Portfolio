@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { NAV_LINKS } from '../constants';
 
 const Navbar: React.FC = () => {
@@ -43,9 +43,7 @@ const Navbar: React.FC = () => {
     }`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0c]">
-          <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.3)]">
-            <Globe className="text-white w-6 h-6" />
-          </div>
+          <img src="/logo.png" alt="ZGeon Solutions Logo" className="h-10 w-auto" />
           <span className="text-xl font-bold tracking-tight text-white">ZGeon Solutions<span className="text-indigo-500">.</span></span>
         </a>
 
